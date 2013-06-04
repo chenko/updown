@@ -1,0 +1,39 @@
+html
+  head
+    title= settings.title
+    link(rel='stylesheet', href='./stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='./stylesheets/style.css')
+    script(src='./javascripts/utils.js')
+    script(src='./javascripts/jquery.min.js')
+    script(src='./javascripts/jquery.ext.js')
+    script(src='./javascripts/caustic.js')
+    script(src='./javascripts/progress.js')
+    script(src='./javascripts/loading.js')
+    script(src='./javascripts/job.js')
+    script(src='./javascripts/search.js')
+    
+  body
+    //- div(class="title") 
+    h2 #{Object.keys(services).length} Services
+    table(class='service table table-hover')
+      tr(class="title")
+        td Name
+        td Url
+        td Frequency(s)
+        td Last Run
+        td Next Run
+        td Status
+      each item, service in services
+        tr(class="#{item.name} warning")
+          td(class='name') #{service}
+          td(class='url') 
+            a(href="#{item.url}", target="_blank") #{item.url}
+          td(class='interval') #{item.interval/1000}
+          td(class='last_run')
+          td(class='next_run')
+          td(class='status') Pending
+            canvas(class="status", width=15, height=15)
+
+
+
+    script(src='./javascripts/main.js')
