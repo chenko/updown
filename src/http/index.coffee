@@ -24,6 +24,7 @@ app.get '/dashboard', (req, res) ->
 
 app.get "/service/:name/status", (req, res) ->
   name = decodeURI req.param 'name'
+  return res.send 'Not Found Service', 400 if !serviceList[name]?
   info = serviceList[name].info
 
   res.json info
