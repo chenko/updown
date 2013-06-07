@@ -8,12 +8,6 @@ html
     script(src='./javascripts/bootstrap.min.js')
     
   body
-    //- div(class="title") 
-    div(class="aaa")
-    //- <a id="element" href="#" data-container="div.aaa" data-content='{ "aa":"aa"}'>hover over me</a>
-    div(class="contain")
-      h1 Heading 1
-      h2 Heading 2
     h1(class="title") #{Object.keys(services).length} Services
     table(class='service table table-hover')
       tr(class="title")
@@ -28,7 +22,7 @@ html
           td(class='name') #{item.name_origin}
           td(class='url') 
             a(href="#{item.url}", target="_blank") #{item.url}
-          td(class='interval') #{item.interval/1000}
+          td(class='interval') #{item.cronTime}
           td(class='last_run')
           td(class='next_run')
           td(class='status') Pending
