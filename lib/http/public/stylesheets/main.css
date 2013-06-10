@@ -1,5 +1,5 @@
 body {
-  padding: 50px 120px;
+  padding: 50px 80px;
 }
 #menu {
   margin: 0;
@@ -417,6 +417,15 @@ table tr td {
      -moz-background-clip: padding;
           background-clip: padding-box;
 }
+
 .popover li{
   list-style: none;
+}
+
+.header.last_run, .header.next_run{
+  width: 205px;
+}
+
+td.status .text{
+  margin-right: 10px;
 }

@@ -10,23 +10,24 @@ html
   body
     h1(class="title") #{Object.keys(services).length} Services
     table(class='service table table-hover')
-      tr(class="title")
-        td Name
-        td Location
-        td Frequency(s)
-        td Last Run
-        td Next Run
-        td Status
+      tr(class="header-row")
+        th(class="header name") Name
+        th(class="header location") Location
+        th(class="header frequency") Frequency
+        th(class="header last_run") Last Run
+        th(class="header next_run") Next Run
+        th(class="header status") Status
       each item, service in services
         tr(class="#{item.name} warning")
           td(class='name') #{item.name_origin}
           td(class='url') 
-            a(href="#{item.url}", target="_blank") #{item.url}
+            a(href="#{item.url}", target="_blank") #{item.url} 
           td(class='interval') #{item.cronTime}
           td(class='last_run')
           td(class='next_run')
-          td(class='status') Pending
-            //- span(class="text") Pending...
+          td(class='status') 
+            span(class="text") Pending...
+            <i class="icon-info-sign status-icon"></i>
             //- span(class="data") Data
 
 
