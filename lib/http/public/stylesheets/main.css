@@ -432,3 +432,11 @@ table tr td {
 td.status .text{
   margin-right: 10px;
 }
+
+div.title{
+  float:left;
+}
+
+div.datetime{
+  float:right;
+}

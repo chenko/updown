@@ -28,7 +28,6 @@ Updown = (@name, @config) ->
 
 EventEmitter = require("events").EventEmitter
 exports = module.exports = Updown
-exports.version = "0.0.1"
 
 exports.createService = (name, config)->
   new Updown(name, config)

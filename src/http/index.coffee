@@ -2,7 +2,7 @@
 express = require("express")
 app = express()
 util = require("util")
-
+moment = require('moment')
 module.exports = (config) ->
   app.set "view options",
     doctype: "html"
@@ -25,6 +25,9 @@ module.exports = (config) ->
     info = serviceList[name].info
     res.json info
     
-    
-  return app
+  app.get '/timezone', (req, res) ->
+    res.json
+      datetime: moment().format('LLL')
+      offset: (moment().zone() / 60) * -1
 
+  return app

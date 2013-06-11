@@ -6,9 +6,13 @@ html
     //- link(rel='stylesheet', href='./stylesheets/style.css')
     script(src='./javascripts/jquery.min.js')
     script(src='./javascripts/bootstrap.min.js')
+    script(src='./javascripts/moment.min.js')
     
   body
-    h1(class="title") #{Object.keys(services).length} Services
+    div.title
+      h1(class="title") #{Object.keys(services).length} Services
+    div.datetime
+      h1 &nbsp;
     table(class='service table table-hover')
       tr(class="header-row")
         th(class="header name") Name
