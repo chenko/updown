@@ -13,11 +13,16 @@ config =
 
 Updown = (@name, @config) ->
   @config.cronTime = @config.cronTime || '00 */1 * * * *' # Run every 5 minutes
+  @last_run = null
+  @next_run = null
+  @countRun = 0
   @service_name = name.toLowerCase()
   if serviceList[@service_name]? 
     throw new Error "Duplicate service name: #{@name}"
 
-  @init() if @config.ping?
+  if @config.ping? and @config.ping is true
+    @setCronTime('ping')
+    @init()
   return this
 
 EventEmitter = require("events").EventEmitter
@@ -46,21 +51,16 @@ Updown::init = ->
   ## Add empty function to prevent thow error
   @on 'error', -> 
   serviceList[@service_name] = @config
-  @setCronTime('ping')
   serviceList[@.service_name].info = {}
   serviceList[@.service_name].name = @.name.replace /\s/g, '-'
   serviceList[@.service_name].name_origin = @.name
   serviceList[@service_name].info.interval = @cronTime.cronTime.getTimeout()
-  if @.config.ping? and @.config.ping is true
-    @.ping(this)
+  @_setServiceTime()
 
 Updown::ping = ->
   self = this
   url = @config.url
-  interval = @cronTime._timeout._idleTimeout / 1000
-  serviceList[@service_name].info.last_run = moment().format(timeFormat)
-  serviceList[@service_name].info.next_run = moment().add('seconds', interval).format(timeFormat)
-  # console.log 'pingging....'
+  @_setServiceTime()
   request url, (err, res, body) ->
     if err?
       self.isNotOk()
@@ -75,20 +75,22 @@ Updown::ping = ->
 
 Updown::process = (fn) ->
   self = this
-  @init()
-  # console.log 'run process'
-  @process_fn = fn
   @setCronTime('process')
-  interval = @cronTime._timeout._idleTimeout / 1000
-  serviceList[@service_name].info.last_run = moment().format(timeFormat)
-  serviceList[@service_name].info.next_run = moment().add('seconds', interval).format(timeFormat)
+  @init()
+  @process_fn = fn
+  @_setServiceTime()
+
+Updown::runProcess = ->
+  self = this
+  @_setServiceTime()
 
   done = 
     success: (data) ->
       self.success data
     error: (data) ->
       self.error data
-  fn done
+  @process_fn done
+
 
 Updown::setCronTime = (type) ->
   self = this
@@ -99,7 +101,7 @@ Updown::setCronTime = (type) ->
         if type is 'ping'
           self.ping()
         else if type is 'process'
-          self.process self.process_fn
+          self.runProcess()
         else
           thorw new Error 'setCrontime type not valid'
 
@@ -150,6 +152,17 @@ Updown::sendMail = ->
       console.log "Email sent: #{self.name} "
 
   mailer.close() # shut down the connection pool, no more messages
+
+Updown::_setServiceTime = ->
+  interval = @cronTime.cronTime.getTimeout() / 1000
+  last_run = moment().format(timeFormat)
+  next_run = moment().add('seconds', interval).format(timeFormat)
+
+  @last_run = last_run if @countRun > 0
+  @next_run = next_run
+  serviceList[@service_name].info.last_run = @last_run
+  serviceList[@service_name].info.next_run = next_run
+  @countRun++
 
 exports.mailConfig = (config) ->
   # create reusable transport method (opens pool of SMTP connections)
