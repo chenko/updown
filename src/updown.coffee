@@ -12,7 +12,7 @@ config =
   startPath: '/dashboard'
 
 Updown = (@name, @config) ->
-  @config.cronTime = @config.cronTime || '00 */1 * * * *' # Run every 5 minutes
+  @config.cronTime = @config.cronTime || '00 */1 * * * *' # Run every 1 minutes
   @last_run = null
   @next_run = null
   @countRun = 0
@@ -23,6 +23,7 @@ Updown = (@name, @config) ->
   if @config.ping? and @config.ping is true
     @setCronTime('ping')
     @init()
+    @_setServiceTime()
   return this
 
 EventEmitter = require("events").EventEmitter
@@ -55,7 +56,6 @@ Updown::init = ->
   serviceList[@.service_name].name = @.name.replace /\s/g, '-'
   serviceList[@.service_name].name_origin = @.name
   serviceList[@service_name].info.interval = @cronTime.cronTime.getTimeout()
-  @_setServiceTime()
 
 Updown::ping = ->
   self = this
@@ -157,7 +157,6 @@ Updown::_setServiceTime = ->
   interval = @cronTime.cronTime.getTimeout() / 1000
   last_run = moment().format(timeFormat)
   next_run = moment().add('seconds', interval).format(timeFormat)
-
   @last_run = last_run if @countRun > 0
   @next_run = next_run
   serviceList[@service_name].info.last_run = @last_run

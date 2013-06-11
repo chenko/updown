@@ -425,6 +425,9 @@ table tr td {
 .header.last_run, .header.next_run{
   width: 205px;
 }
+.header.frequency{
+  width: 115px;
+}
 
 td.status .text{
   margin-right: 10px;
