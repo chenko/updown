@@ -9,7 +9,7 @@ mailer = {}
 mailOptions = {}
 
 config =
-  startPath: '/dashboard'
+  startPath: '/'
 
 Updown = (@name, @config) ->
   @config.cronTime = @config.cronTime || '00 */1 * * * *' # Run every 1 minutes
@@ -60,15 +60,17 @@ Updown::ping = ->
   self = this
   url = @config.url
   @_setServiceTime()
+  acceptStatusCode = [200, 201, 202, 203,204]
   request url, (err, res, body) ->
     if err?
       self.isNotOk()
       self.emit 'error', err
     else
-      if res.statusCode is 200
+      if res.statusCode in acceptStatusCode
         self.isOk()
         self.emit 'success', res, body
       else
+        self.isNotOk()
         self.emit 'error', body
 
 
