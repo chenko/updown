@@ -139,8 +139,9 @@ Updown::isNotOk = (data = null) ->
 
 Updown::sendMail = ->
   self = @
-  mailOptions.subject = "Service [ #{@name} ] is down"
+  mailOptions.subject = "Service [ #{@name} ] has down"
   mailOptions.html = """
+  <b>Service Name</b> : #{@name} <br>
   <b>Location</b> : #{@config.url} <br>
   <b>Check Time</b> : #{moment().format('LLL')}
   """
