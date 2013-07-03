@@ -166,12 +166,7 @@ Updown::_setServiceTime = ->
 
 exports.mailConfig = (config) ->
   # create reusable transport method (opens pool of SMTP connections)
-  mailer = nodemailer.createTransport("SMTP",
-    service: config.service
-    auth:
-      user: "bot@jitta.com"
-      pass: "1r2o3b4o5t"
-  )
+  mailer = nodemailer.createTransport("SMTP", config)
 
   # setup e-mail data
   mailOptions =
