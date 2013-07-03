@@ -172,11 +172,18 @@ app.use(express.basicAuth('testUser', 'testPass'));
 ```
 
 
-API
-==========
+## API
 
 `updown.createService( name, options)`
 
   * `url` - [REQUIRED] - The service location.
   * `ping` - [OPTIONAL] - Simply ping the url. don't use this option when use `updown.process()`.
   * `cronTime` - [OPTIONAL] - defaults to `00 */1 * * * *` run every 1 minutes.
+
+`updown.setPath(path)`
+
+  Set path to web interface. defaults is root path `'/'`.
+
+## TODO
+* Use Socket.io to update service status.
+* Display both local and server time
