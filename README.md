@@ -168,7 +168,7 @@ To run it:
   Add authentication for your app by adding additional middleware like Connect's `basicAuth()`
 
 ```js
-app.use(express.basicAuth(‘testUser’, 'testPass'));
+app.use(express.basicAuth('testUser', 'testPass'));
 ```
 
 
