@@ -2,7 +2,7 @@
 
 # Updown
 
-Remote monitoring and dashboard for your Express apps.
+Remote monitoring and dashboard for monitor your website.
 
 ## User-Interface
   ![updown logo](http://oi39.tinypic.com/301cxg0.jpg "updown interface")
@@ -121,7 +121,7 @@ database.process(function(done) {
   On web interface when you pass data to `done.success(data)` or `done.error(data)`
 ![updown](http://i.imgur.com/UbIq0fy.png)
 
-## Send Mail
+## Email Alert
   Calling `updown.mailConfig()` with SMTP config to send mail when service change status from up to down
 
 ```js
