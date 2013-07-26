@@ -187,3 +187,6 @@ app.use(express.basicAuth('testUser', 'testPass'));
 ## TODO
 * Use Socket.io to update service status.
 * Display both local and server time
+* Add update.sendmail(true) for send email for all service when status down as default
+* Add options sendmail: false when use method `createService()` for disable send mail
+* Add time zone to service down time to email
